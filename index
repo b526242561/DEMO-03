@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+ <head>
+   <title>抽奖</title>
+   <meta charset="utf-8">
+   <style>
+       *{margin:0;
+           padding:0;}
+
+       .title{width:400px;
+           height:70px;
+           margin:0 auto;
+           padding-top:30px;
+           text-align:center;
+           font-size:24px;
+           font-weight:bold;
+           color:#F00;}
+
+       .btns{width:190px;
+           height:30px;
+           margin:0 auto;}
+
+       .btns span{display:block;
+           float:left;
+           width:80px;
+           height:27px;
+           line-height:27px;
+           background:#036;
+           border:1px solid #eee;
+           border-radius:7px;
+           margin-right:10px;
+           color:#FFF;
+           text-align:center;
+           font-size:14px;
+           font-family:"微软雅黑";
+           cursor:pointer;}
+   </style>
+ </head>
+ <body>
+    <div id="title" class="title">1</div>
+    <div class="btns">
+       <span id="play">开 始</span>
+       <span id="stop">停 止</span>
+    </div>
+ </body>
+ <script>
+     var data=['1','2','3','4','5','6','7','8'],
+             timer=null,
+             flag=0;
+
+     window.onload=function(){
+         var play=document.getElementById('play'),
+                 stop=document.getElementById('stop');
+
+         // 开始抽奖
+         play.onclick=playFun;
+         stop.onclick=stopFun;
+
+         // 键盘事件
+         document.onkeyup=function(event){只
+             event = event || window.event;//兼容性，部分浏览器必须用window
+             //用flag来判定回车是第几次点击，且event对象中选取keyCode键值获取回车的对应编号
+             if(event.keyCode==13){
+                 if(flag==0){
+                     playFun();
+                     flag=1;
+                 }else{
+                     stopFun();
+                     flag=0;
+                 }
+             }
+         }
+     }
+
+     function playFun(){
+         var title=document.getElementById('title');
+         var play=document.getElementById('play');
+         clearInterval(timer);
+         timer=setInterval(function(){
+             var random=Math.floor(Math.random()*data.length);
+             title.innerHTML=data[random];
+         },50);
+         play.style.background='#999';
+     }
+
+     function stopFun(){
+         clearInterval(timer);
+         var play=document.getElementById('play');
+         play.style.background='#036';
+     }
+ </script>
+</html>
